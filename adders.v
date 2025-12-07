@@ -27,3 +27,11 @@ module fa8(sum,cout,a,b,cin);
   fa4 f2(sum [7:4], cout, a[7:4], b[7:4],w);
 endmodule 
 
+module add32(clk,a,b,sum);
+  input clk;
+  input [31:0] a,b;
+  output reg [31:0] sum;
+  always @(posedge clk) begin 
+    sum = a + b;
+  end 
+endmodule 
