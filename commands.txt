@@ -1,0 +1,17 @@
+set_db init_lib_search_path {/home/install/FOUNDRY/digital/45nm/dig/lib}
+set_db init_hdl_search_path {rtl}
+set_db syn_generic_effort medium
+set_db syn_map_effort medium
+set_db syn_opt_effort medium
+read_lib typical.lib
+read_hdl <filename.v>
+elaborate
+read_sdc constraints.g (only if asked for constraints)
+syn_generic
+syn_map
+syn_opt
+report_timing -unconstrained (only if theres no constraints) > <filename_timing.rpt>
+report_power > <filename_power.rpt>
+report_area > <filename_area.rpt>
+write_hdl > <filename_netlist.v>
+gui_show
