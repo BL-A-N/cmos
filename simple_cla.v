@@ -18,16 +18,17 @@ module CarryLookAheadAdder(
   assign S = A^B^Ci;
 endmodule
 
-module cla(
-    input [3:0] A, B,
+module cla_8bit(
+    input clk,
+    input [7:0] A, B,
     input Cin,
-    output [3:0] S,
+    output [7:0] S,
     output Cout
 );
 
-    wire [3:0] P;
-    wire [3:0] G;
-    wire [3:0] Ci;
+    wire [7:0] P;
+    wire [7:0] G;
+    wire [8:0] Ci;
 
     assign P = A ^ B;
     assign G = A & B;
@@ -37,8 +38,14 @@ module cla(
     assign Ci[1] = G[0] | (P[0] & Ci[0]);
     assign Ci[2] = G[1] | (P[1] & Ci[1]);
     assign Ci[3] = G[2] | (P[2] & Ci[2]);
+    assign Ci[4] = G[3] | (P[3] & Ci[3]);
+    assign Ci[5] = G[4] | (P[4] & Ci[4]);
+    assign Ci[6] = G[5] | (P[5] & Ci[5]);
+    assign Ci[7] = G[6] | (P[6] & Ci[6]);
+    assign Ci[8] = G [7] | (p[7] & Ci[7]);
 
-    assign Cout = G[3] | (P[3] & Ci[3]);
-
-    assign S = P ^ Ci;
+  always @(posedge clk) begin 
+    S <= P ^ Ci[7:0];
+    Cout <= Ci[8];
+  end 
 endmodule
